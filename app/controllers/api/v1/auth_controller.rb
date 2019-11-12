@@ -5,7 +5,7 @@ class Api::V1::AuthController < ApplicationController
     user = User.find_by(username: params[:username])
 
     if user && user.authenticate(params[:password])
-      # issue that user a token
+      # issue that user a token\
       token = issue_token(user)
       render json: {id: user.id, username: user.username, jwt: token}
     else
@@ -14,10 +14,9 @@ class Api::V1::AuthController < ApplicationController
   end
 
   def show
-    # token = request.headers['Authorization']
-    # user = User.find_by(id: token)
+    user = User.find_by(id: user_id)
     if logged_in?
-      render json: { id: current_user.id, username: current_user.username }
+      render json: { id: user.id, username: user.username }
     else
       render json: {error: 'No user could be found'}, status: 401
     end
