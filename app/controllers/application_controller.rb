@@ -6,8 +6,6 @@ class ApplicationController < ActionController::API
 
   def current_user
     @user ||= User.find_by(id: user_id)
-    puts @user
-    @user
   end
 
   def token
@@ -18,7 +16,7 @@ class ApplicationController < ActionController::API
     begin
       JWT.decode(token, 'secret_key', true, { :algorithm => 'HS256' })
     rescue JWT::DecodeError
-      [{}]
+      [{error: "Invalid Token"}]
     end
   end
 
